@@ -1,0 +1,78 @@
+[
+  {
+    "id": 2,
+    "nombre": "Auriculares Sony WH-1000XM4",
+    "categoria": "Audio",
+    "precio": 320,
+    "stock": 25,
+    "descripcion": "Auriculares inalámbricos con cancelación activa de ruido."
+  },
+  {
+    "id": 3,
+    "nombre": "Cafetera Nespresso Essenza Mini",
+    "categoria": "Electrodomésticos",
+    "precio": 120,
+    "stock": 8,
+    "descripcion": "Cafetera compacta con sistema de cápsulas."
+  },
+  {
+    "id": 4,
+    "nombre": "Pepe",
+    "categoria": "Muebles",
+    "precio": 123,
+    "stock": 1,
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D."
+  },
+  {
+    "id": 5,
+    "name": "PC",
+    "price": 1,
+    "description": "lalala",
+    "category": "lalala"
+  },
+  {
+    "id": 6,
+    "name": "Mouse",
+    "price": 1,
+    "description": "lalala",
+    "category": "lalala"
+  },
+  {
+    "id": 7,
+    "nombre": "River Plate",
+    "precio": 123,
+    "descripcion": "lalala",
+    "categoria": "lalala",
+    "stock": 1
+  },
+  {
+    "id": 8,
+    "nombre": "Silla Gamer",
+    "categoria": "Muebles",
+    "precio": 210,
+    "stock": 15,
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D."
+  },
+  {
+    "id": 8,
+    "nombre": "Silla Gamer",
+    "categoria": "Muebles",
+    "precio": 210,
+    "stock": 15,
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D."
+  },
+  {
+    "nombre": "Silla Gamer",
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D.",
+    "stock": 15,
+    "categoria": "Muebles",
+    "precio": 210
+  },
+  {
+    "nombre": "Silla Gamer2025",
+    "descripcion": "Silla ergonómica reclinable con apoyabrazos 3D.",
+    "stock": 15555,
+    "categoria": "Muebles",
+    "precio": 220
+  }
+]
