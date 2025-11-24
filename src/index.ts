@@ -9,7 +9,7 @@ import authRouter from "./routes/authRouter";
 import morgan from "morgan"
 import logger from "./config/logger";
 import limiter from "./middleware/rateLimitMiddleware";
-import authMiddleware from "./middleware/authMiddleware";
+// import authMiddleware from "./middleware/authMiddleware";
 // import IUserTokenPayload from "./interfaces/IUserTokerPayload";
 import dotenv from "dotenv"
 dotenv.config()
