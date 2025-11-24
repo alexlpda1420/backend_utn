@@ -10,19 +10,19 @@ import morgan from "morgan"
 import logger from "./config/logger";
 import limiter from "./middleware/rateLimitMiddleware";
 import authMiddleware from "./middleware/authMiddleware";
-import IUserTokenPayload from "./interfaces/IUserTokerPayload";
+// import IUserTokenPayload from "./interfaces/IUserTokerPayload";
 import dotenv from "dotenv"
 dotenv.config()
 
 
 
-declare global {
-  namespace Express {
-    interface Request {
-      user?: IUserTokenPayload
-    }
-  }
-}
+// declare global {
+//   namespace Express {
+//     interface Request {
+//       user?: IUserTokenPayload
+//     }
+//   }
+// }
 // Credenciales
 const PORT = process.env.PORT!
 // Creacion del servidor

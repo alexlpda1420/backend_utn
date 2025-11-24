@@ -1,0 +1,15 @@
+::1 POST /products 400 45 - 5.981 ms
+::1 POST /products 400 45 - 2.054 ms
+::1 POST /products 400 135 - 5.430 ms
+::1 POST /products 400 195 - 1.606 ms
+::1 POST /products 400 195 - 1.195 ms
+::1 POST /products 400 61 - 3.502 ms
+::1 POST /products 400 195 - 4.528 ms
+::1 POST /products 400 223 - 7.494 ms
+::1 POST /products 400 221 - 4.883 ms
+::1 PATCH /products/69236f396967efba056916e3 200 28 - 70.934 ms
+::1 PATCH /products/692389d6cccbbf60b8d0b734 200 180 - 46.257 ms
+::1 PATCH /products/692389d6cccbbf60b8d0b734 200 180 - 43.673 ms
+::1 PATCH /products/692389d6cccbbf60b8d0b734 200 180 - 43.992 ms
+::1 PATCH /products/69249c7c97d383e8adc9daa5 200 122 - 44.858 ms
+::1 PATCH /products/6924a7986f2cfb2dacb84a73 200 151 - 65.994 ms
