@@ -48,7 +48,7 @@ app.use("/auth",limiter, authRouter)
 app.use("/auth",limiter, authRouter)
 
 // ENDPOINT - Productos
-app.use("/products", authMiddleware, productRouter)
+app.use("/products", productRouter)
 
 // Endpoiunt para el 404 - No se encuentra el recurso
 app.use("", (_: Request, res: Response): void => {
