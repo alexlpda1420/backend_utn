@@ -4,123 +4,165 @@
 import { Types } from "mongoose";
 import Product from "../model/ProductModel";
 import { Request, Response } from "express";
-import { createProductSchema, updatedProductSchema } from "../validators/productValidator";
-
+import {
+  createProductSchema,
+  updatedProductSchema,
+} from "../validators/productValidator";
 
 class ProductController {
-  static getAllProducts = async (req: Request, res: Response): Promise<void | Response> => {
-
+  static getAllProducts = async (
+    req: Request,
+    res: Response
+  ): Promise<void | Response> => {
     try {
+      const { name, stock, category, minPrice, maxPrice } = req.query;
+      const filter: any = {};
+      if (name) filter.name = new RegExp(String(name), "i");
+      if (stock) filter.stock = Number(stock);
+      if (category) filter.category = new RegExp(String(category), "i");
+      if (minPrice || maxPrice) {
+        filter.price = {};
+        // maxPrice > si tengo precio maximo quiero un objeto con un precio menor
+        // minPrice > si tengo precio minimo quiero un objeto con un precio mayor
+        if (minPrice) filter.price.$gte = minPrice;
+        if (maxPrice) filter.price.$lte = maxPrice;
+      }
 
-      const listProducts = await Product.find()
+      console.log(filter);
+
+      const listProducts = await Product.find(filter);
       res.json({ success: true, data: listProducts });
     } catch (e) {
-      const error = e as Error
-      res.status(500).json({ success: false, error: error.message })
-
+      const error = e as Error;
+      res.status(500).json({ success: false, error: error.message });
     }
-  }
+  };
 
-  static getProductById = async (req: Request, res: Response): Promise<Response | void> => {
+  static getProductById = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
     try {
       const { id } = req.params;
       if (!Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ success: false, error: "Id Invalido" })
-
+        return res.status(404).json({ success: false, error: "Id Invalido" });
       }
 
-
-      const productFinded = await Product.findById(id)
+      const productFinded = await Product.findById(id);
 
       if (!productFinded) {
-        return res.status(404).json({ success: false, error: "Producto no encontrado" });
+        return res
+          .status(404)
+          .json({ success: false, error: "Producto no encontrado" });
       }
       res.status(200).json({ success: true, data: productFinded });
-
     } catch (e) {
-      const error = e as Error
+      const error = e as Error;
 
-      res.status(500).json({ success: false, error: error.message })
+      res.status(500).json({ success: false, error: error.message });
     }
-  }
+  };
 
-  static addProduct = async (req: Request, res: Response): Promise<Response | void> => {
+  static addProduct = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
     try {
       const { body } = req;
 
       const { name, description, price, category, stock } = body;
 
       if (!name || !description || !price || !category || !stock) {
-        return res.status(400).json({ success: false, message: "Todos los campos son requeridos" });
+        return res
+          .status(400)
+          .json({ success: false, message: "Todos los campos son requeridos" });
       }
 
-      const validator = createProductSchema.safeParse(body)
+      const validator = createProductSchema.safeParse(body);
 
       if (!validator.success) {
-        return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
+        return res.status(400).json({
+          success: false,
+          error: validator.error.flatten().fieldErrors,
+        });
       }
-      const newProduct = new Product(
-        {
-          name,
-          description,
-          stock,
-          category,
-          price
-        }
-      )
+      const newProduct = new Product({
+        name,
+        description,
+        stock,
+        category,
+        price,
+      });
 
-      await newProduct.save()
-
+      await newProduct.save();
 
       res.status(201).json({ success: true, data: newProduct });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Error interno del servidor" })
+      res
+        .status(500)
+        .json({ success: false, error: "Error interno del servidor" });
     }
-  }
+  };
 
-  static updateProduct = async (req: Request, res: Response): Promise<Response | void> => {
+  static updateProduct = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
     try {
       const { id } = req.params;
       const { body } = req;
 
-      if (!Types.ObjectId.isValid(id)) res.status(404).json({ success: false, error: "Id Invalido" })
+      if (!Types.ObjectId.isValid(id))
+        res.status(404).json({ success: false, error: "Id Invalido" });
 
-      const validator = updatedProductSchema.safeParse(body)
+      const validator = updatedProductSchema.safeParse(body);
 
       if (!validator.success) {
-        return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
+        return res.status(400).json({
+          success: false,
+          error: validator.error.flatten().fieldErrors,
+        });
       }
 
-      const productUpdated = await Product.findByIdAndUpdate(id, validator.data, { new: true })
+      const productUpdated = await Product.findByIdAndUpdate(
+        id,
+        validator.data,
+        { new: true }
+      );
 
       res.json({ success: true, data: productUpdated });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Error interno del servidor" })
+      res
+        .status(500)
+        .json({ success: false, error: "Error interno del servidor" });
     }
-  }
+  };
 
-  static deleteProduct = async (req: Request, res: Response): Promise<Response | void> => {
+  static deleteProduct = async (
+    req: Request,
+    res: Response
+  ): Promise<Response | void> => {
     try {
       const { id } = req.params;
 
       if (!Types.ObjectId.isValid(id)) {
-        return res.status(404).json({ success: false, error: "Id Invalido" })
-
+        return res.status(404).json({ success: false, error: "Id Invalido" });
       }
 
-      const productDeleted = await Product.findByIdAndDelete(id)
+      const productDeleted = await Product.findByIdAndDelete(id);
       if (!productDeleted) {
-        return res.status(404).json({ success: false, error: "Producto no encontrado" })
+        return res
+          .status(404)
+          .json({ success: false, error: "Producto no encontrado" });
       }
 
       res.json({ success: true, data: productDeleted });
     } catch (error) {
-      res.status(500).json({ success: false, error: "Error interno del servidor" })
-
+      res
+        .status(500)
+        .json({ success: false, error: "Error interno del servidor" });
     }
-  }
-
+  };
 }
 
-
-export default ProductController
+export default ProductController;
