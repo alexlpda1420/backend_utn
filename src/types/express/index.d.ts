@@ -1,4 +1,4 @@
-import IUserTokenPayload from "../../interfaces/IUserTokerPayload";
+import IUserTokenPayload from "../../interfaces/IUserTokenPayload";
 
 declare global {
   namespace Express {
@@ -8,4 +8,4 @@ declare global {
   }
 }
 
-export {};  // Obligatorio para que esto sea un módulo
+export { };  // Obligatorio para que esto sea un módulo

@@ -2,6 +2,7 @@
 
 import { Router } from "express";
 import ProductController from "../controllers/productController";
+import authMiddleware from "../middleware/authMiddleware";
 
 const productRouter = Router()
 
@@ -10,9 +11,9 @@ const productRouter = Router()
 
 productRouter.get("/",ProductController.getAllProducts);
 productRouter.get("/:id", ProductController.getProductById);
-productRouter.post("/", ProductController.addProduct);
-productRouter.patch("/:id", ProductController.updateProduct);
-productRouter.delete("/:id", ProductController.deleteProduct);
+productRouter.post("/", authMiddleware, ProductController.addProduct);
+productRouter.patch("/:id",authMiddleware, ProductController.updateProduct);
+productRouter.delete("/:id",authMiddleware, ProductController.deleteProduct);
 
 
 export default productRouter

@@ -9,13 +9,21 @@ dotenv.config()
 const SECRET_KEY = process.env.JWT_SECRET!
 
 class authController {
+
+  
+
   static register = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const { email, password } = req.body
 
       if (!email || !password) {
-        return res.status(400).json({ success: false, error: "Datos Invalidos" })
+        return res.status(400).json({ success: false, error: "Datos Inválidos" })
       }
+      const user = await User.findOne({ email })
+      if (user) {
+        return res.status(409).json({success: false, error: "El usuario ya existe en la base de datos."})
+      }
+
 
       // Crear el hash de la contraseña
       const hash = await bcrypt.hash(password, 10)
@@ -24,7 +32,7 @@ class authController {
 
       await newUser.save()
 
-      res.json({ success: true, data: newUser })
+      res.status(201).json({ success: true, data: newUser })
     } catch (e) {
       const error = e as Error
       if (error.name === "MongoServerError") {
@@ -39,7 +47,7 @@ class authController {
       const { email, password } = req.body
 
       if (!email || !password) {
-        return res.status(400).json({ success: false, error: "Datos Invalidos" })
+        return res.status(400).json({ success: false, error: "Datos Inválidos" })
       }
       // Validar usuario
       const user = await User.findOne({ email })
@@ -60,7 +68,7 @@ class authController {
       // 2- Clave secreta -> firma que valida el token
       // 3- Opciones -> cuando expira
 
-      const token = jwt.sign({ id: user._id }, SECRET_KEY, { expiresIn: "1h" })
+      const token = jwt.sign({ id: user._id, email: user.email }, SECRET_KEY, { expiresIn: "1h" })
       res.json({ success: true, token })
     } catch (e) {
       const error = e as Error
