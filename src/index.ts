@@ -11,8 +11,7 @@ import logger from "./config/logger";
 import limiter from "./middleware/rateLimitMiddleware";
 // import authMiddleware from "./middleware/authMiddleware";
 // import IUserTokenPayload from "./interfaces/IUserTokenPayload";
-import dotenv from "dotenv"
-import { success } from "zod";
+import dotenv from "dotenv";
 import transporter from "./config/emailConfig";
 import createTemplate from "./templates/emailTemplate";
 dotenv.config()

@@ -6,8 +6,8 @@
     "outDir": "./dist",
     "esModuleInterop": true,
     "strict": true, // Activa las validaciones más importantes
-    // "noImplicitAny": true, // No permite variables sin tipo
-    // "noUnusedLocals": true, // Detecta variables locales sin usar
+    "noImplicitAny": true, // No permite variables sin tipo
+    "noUnusedLocals": true, // Detecta variables locales sin usar
     "resolveJsonModule": true, // Permite importar archivos .json
     "typeRoots": ["./src/types", "./node_modules/@types"]
   },
