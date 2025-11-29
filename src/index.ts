@@ -12,6 +12,9 @@ import limiter from "./middleware/rateLimitMiddleware";
 // import authMiddleware from "./middleware/authMiddleware";
 // import IUserTokenPayload from "./interfaces/IUserTokenPayload";
 import dotenv from "dotenv"
+import { success } from "zod";
+import transporter from "./config/emailConfig";
+import createTemplate from "./templates/emailTemplate";
 dotenv.config()
 
 
@@ -42,20 +45,47 @@ app.get("/", (_: Request, res: Response) => {
   res.json({ status: true });
 });
 // ENDPOINT - Registro de usuario
-app.use("/auth",limiter, authRouter)
+app.use("/auth", limiter, authRouter)
 
 // ENDPOINT - Login de usuario
-app.use("/auth",limiter, authRouter)
+app.use("/auth", limiter, authRouter)
 
 // ENDPOINT - Productos
 app.use("/products", productRouter)
 
+// Enviar correo electrónico
+app.post("/email/send", async (req, res) => {
+  const { subject, email: emailUser, message } = req.body
+
+  if (!subject || !emailUser
+    || !message) {
+    return res.status(400).json({ success: false, message: "Data Invalida" })
+  }
+
+  try {
+    const info = await transporter.sendMail({
+      from: `Mensaje de la tienda: ${emailUser}`,
+      to: process.env.EMAIL_USER,
+      subject,
+      html: createTemplate(emailUser, message)
+    })
+
+   res.json({ succes: true, message: "Correo fue enviado exitosamente", info })
+
+  } catch (e) {
+    const error = e as Error
+    res.status(500).json({ success: false, error: error.message })
+  }
+})
+
 // Endpoiunt para el 404 - No se encuentra el recurso
 app.use("", (_: Request, res: Response): void => {
-  res.status(404).json({ success: false,
+  res.status(404).json({
+    success: false,
     error: "El recurso no se encuentra"
   })
 })
+
 // Servidor en escucha
 app.listen(PORT, () => {
   connectDB()
