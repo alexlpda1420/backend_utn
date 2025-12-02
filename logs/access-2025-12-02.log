@@ -1,2 +1,7 @@
 ::1 POST /email/send 200 555 - 3012.217 ms
 ::1 POST /email/send 200 554 - 2182.535 ms
+::1 GET / 304 - - 2.144 ms
+::1 GET /products 200 3935 - 54.960 ms
+::1 GET /email/send 404 54 - 0.406 ms
+::1 POST /email/send 200 554 - 2963.758 ms
+::1 POST /eemail/send 404 54 - 0.175 ms
