@@ -8,3 +8,5 @@
 ::1 GET / 200 15 - 0.650 ms
 ::1 POST /email/send 200 555 - 2297.253 ms
 ::1 POST /email/send 200 555 - 1726.706 ms
+::1 POST /email/send 200 555 - 1788.169 ms
+::1 POST /email/send 200 555 - 1757.930 ms
