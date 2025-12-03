@@ -7,7 +7,8 @@ const productSchema = new Schema<IProduct>(
     description: { type: String, default: "No tiene descripcion" },
     stock: { type: Number, default: 0, min: 0 },
     category: { type: String, default: "No tiene categoria" },
-    price: { type: Number, default: 0, min: 0 }
+    price: { type: Number, default: 0, min: 0 },
+    image: { type: String }
   }, {
   versionKey: false
 }

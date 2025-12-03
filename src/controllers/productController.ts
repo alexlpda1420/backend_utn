@@ -63,46 +63,46 @@ class ProductController {
     }
   };
 
-  static addProduct = async (
-    req: Request,
-    res: Response
-  ): Promise<Response | void> => {
+ static addProduct = async (req: Request, res: Response): Promise<void | Response> => {
     try {
-      const { body } = req;
+      const { body, file } = req
 
-      const { name, description, price, category, stock } = body;
+      const { name, description, price, category, stock } = body
 
       if (!name || !description || !price || !category || !stock) {
-        return res
-          .status(400)
-          .json({ success: false, message: "Todos los campos son requeridos" });
+        return res.status(400).json({ message: "Todos los campos son requeridos" })
       }
 
-      const validator = createProductSchema.safeParse(body);
+      // VALIDACIONES DE INPUT
+      // validar el tipo de data que recibo del front
+      // 1 - si para la validación creo el producto
+      // 2 - si no pasa la validación retorno una respuesta 400 al front
 
-      if (!validator.success) {
-        return res.status(400).json({
-          success: false,
-          error: validator.error.flatten().fieldErrors,
-        });
-      }
-      const newProduct = new Product({
+      const dataToValidate = {
         name,
         description,
-        stock,
         category,
-        price,
-      });
+        stock: +stock,
+        price: +price,
+        image: file?.path
+      }
 
-      await newProduct.save();
+      const validator = createProductSchema.safeParse(dataToValidate)
 
-      res.status(201).json({ success: true, data: newProduct });
-    } catch (error) {
-      res
-        .status(500)
-        .json({ success: false, error: "Error interno del servidor" });
+      if (!validator.success) {
+        return res.status(400).json({ success: false, error: validator.error.flatten().fieldErrors });
+      }
+
+      const newProduct = new Product(validator.data)
+
+      await newProduct.save()
+      res.status(201).json({ success: true, data: newProduct })
+    } catch (e) {
+      const error = e as Error
+      res.status(500).json({ success: false, error: error.message })
     }
   };
+
 
   static updateProduct = async (
     req: Request,

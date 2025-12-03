@@ -3,7 +3,8 @@ interface IProduct {
   description: string,
   stock: number,
   category: string,
-  price: number
+  price: number,
+  image?: string
 }
 
 export default IProduct

@@ -2,14 +2,13 @@ import { z } from "zod"
 
 const productSchemaValidator = z.object({
   name: z.string().min(4),
-  description: z.string().min(20),
-  price: z.number().positive(),
+  description: z.string().min(10),
+  price: z.number().min(10, "El valor debe ser mayor a 10"),
   category: z.string().min(2),
-  stock: z.number().positive()
+  stock: z.number().positive(),
+  image: z.string().default("No contiene imagen")
 })
 
 export const createProductSchema = productSchemaValidator
 
 export const updatedProductSchema = productSchemaValidator.partial()
-
-
