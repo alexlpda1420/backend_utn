@@ -124,6 +124,13 @@ class authController {
       })
     } catch (e) {
       const error = e as Error
+
+       if (error.name === "MongoServerError") {
+        return res.status(409).json({
+          success: false,
+          error: "Usuario no existe en la base de datos"
+        })
+      }
       
       res.status(500).json({ success: false, error: "Error al iniciar sesion" })
 
