@@ -91,9 +91,9 @@ class ProductController {
         name,
         description,
         category,
-        stock: +stock,
-        price: +price,
-        image: file?.path
+        price: Number(price),
+        stock: Number(stock),
+        ...(file && { image: file.path })
       }
 
       const validator = createProductSchema.safeParse(dataToValidate)
