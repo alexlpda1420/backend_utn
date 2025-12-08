@@ -4,6 +4,8 @@ import User from "../model/UserModel"
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import { registerUserSchema, loginUserSchema } from "../validators/authValidator"
+import transporter from "../config/emailConfig"
+import createRegisterTemplate from "../templates/registerTemplate"
 
 dotenv.config()
 const SECRET_KEY = process.env.JWT_SECRET!
@@ -18,25 +20,25 @@ class authController {
 
   static register = async (req: Request, res: Response): Promise<void | Response> => {
     try {
-      // ✅ Validar body con Zod (igual que en productos)
+      
       const validator = registerUserSchema.safeParse(req.body)
 
       if (!validator.success) {
         const fieldErrors = validator.error.flatten().fieldErrors
-        // Tomamos el primer mensaje de error para el frontend
+        
         const firstError =
           Object.values(fieldErrors).flat()[0] || "Datos inválidos"
 
         return res.status(400).json({
           success: false,
-          error: firstError,      // <-- lo que usa tu frontend en Register.jsx
-          errors: fieldErrors     // <-- info extra para el TP / Postman
+          error: firstError,     
+          errors: fieldErrors   
         })
       }
 
       const { email, password } = validator.data
 
-      // Verificar si el usuario ya existe
+    
       const user = await User.findOne({ email })
       if (user) {
         return res.status(409).json({
@@ -51,6 +53,20 @@ class authController {
       const newUser = new User({ email, password: hash })
       
       await newUser.save()
+
+      try {
+       const info =  await transporter.sendMail({
+          from: `Tienda de software <${process.env.EMAIL_USER}>`,
+          to: email,
+          subject: "¡Bienvenido a la Tienda de Software!",
+          html: createRegisterTemplate(email)
+        })
+        console.log("✅ Email de bienvenida enviado:", info.messageId)
+      } catch (e) {
+        console.error("❌ Error enviando email de bienvenida", e)
+        
+      }
+
 
       return res.status(201).json({
         success: true,
