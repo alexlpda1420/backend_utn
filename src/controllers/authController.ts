@@ -132,7 +132,7 @@ class authController {
         })
       }
       
-      res.status(500).json({ success: false, error: "Error al iniciar sesion" })
+      res.status(500).json({ success: false, error: "Error al iniciar session" })
 
     }
   }

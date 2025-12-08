@@ -21,14 +21,23 @@ class ProductController {
       if (stock) filter.stock = Number(stock);
       if (category) filter.category = new RegExp(String(category), "i");
       if (minPrice || maxPrice) {
-        filter.price = {};
-        // maxPrice > si tengo precio maximo quiero un objeto con un precio menor
-        // minPrice > si tengo precio minimo quiero un objeto con un precio mayor
-        if (minPrice) filter.price.$gte = minPrice;
-        if (maxPrice) filter.price.$lte = maxPrice;
-      }
+        const min = minPrice ? Number(minPrice) : undefined;
+        const max = maxPrice ? Number(maxPrice) : undefined;
 
-      console.log(filter);
+        filter.price = {};
+
+        if (min !== undefined && !Number.isNaN(min)) {
+          filter.price.$gte = min;
+        }
+        if (max !== undefined && !Number.isNaN(max)) {
+          filter.price.$lte = max;
+        }
+
+        // Si ninguno de los dos era válido, limpias price
+        if (Object.keys(filter.price).length === 0) {
+          delete filter.price;
+        }
+      }
 
       const listProducts = await Product.find(filter);
       res.json({ success: true, data: listProducts });
@@ -63,7 +72,7 @@ class ProductController {
     }
   };
 
- static addProduct = async (req: Request, res: Response): Promise<void | Response> => {
+  static addProduct = async (req: Request, res: Response): Promise<void | Response> => {
     try {
       const { body, file } = req
 
