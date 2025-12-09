@@ -1,18 +1,12 @@
-import nodemailer from "nodemailer"
+import { Resend } from "resend"
 
-const USER = process.env.EMAIL_USER
-const PASS = process.env.EMAIL_PASS
+const RESEND_API_KEY = process.env.RESEND_API_KEY
 
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: USER,
-    pass: PASS
-  }
-  
-})
+if (!RESEND_API_KEY) {
+  throw new Error("RESEND_API_KEY no está definido en el archivo .env")
+}
 
-export default transporter
+const resend = new Resend(RESEND_API_KEY)
+
+export default resend
