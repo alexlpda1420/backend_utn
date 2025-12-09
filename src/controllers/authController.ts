@@ -52,9 +52,9 @@ class authController {
       // ===== Envío de mail de bienvenida con Resend =====
       try {
         await resend.emails.send({
-          from: process.env.RESEND_FROM as string,            // "Tienda UTN <onboarding@resend.dev>"
-          to: email,                                          // se lo mandamos al usuario registrado
-          subject: "Bienvenido a la tienda UTN",
+          from: process.env.RESEND_FROM as string,            
+          to:  process.env.EMAIL_USER as string,                                          
+          subject: "Nuevo usuario registrado en la tienda",
           html: createRegisterTemplate(email)
         })
       } catch (e) {
