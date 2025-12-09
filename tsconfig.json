@@ -9,7 +9,8 @@
     "noImplicitAny": true, // No permite variables sin tipo
     "noUnusedLocals": true, // Detecta variables locales sin usar
     "resolveJsonModule": true, // Permite importar archivos .json
-    "typeRoots": ["./src/types", "./node_modules/@types"]
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "skipLibCheck": true
   },
   "include": ["src"],
   "exclude": ["node_modules"]
