@@ -54,7 +54,7 @@ class authController {
         await resend.emails.send({
           from: process.env.RESEND_FROM as string,            
           to:  process.env.EMAIL_USER as string,                                          
-          subject: "Nuevo usuario registrado en la tienda",
+          subject: "Nuevo usuario registrado en ShopLink",
           html: createRegisterTemplate(email)
         })
       } catch (e) {

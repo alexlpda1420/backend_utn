@@ -5,7 +5,7 @@ const createTemplate = (emailUser: string, message: string) => {
       
       <tr>
         <td style="background: #111; padding: 20px; text-align: center; color: #ffffff;">
-          <h2 style="margin: 0;">Tienda de software ${emailUser}</h2>
+          <h2 style="margin: 0;">ShopLink ${emailUser}</h2>
         </td>
       </tr>
 

@@ -16,7 +16,7 @@ const emailService = async (req: Request, res: Response) => {
       // FROM: el remitente que tengas configurado en Resend
       from:
         process.env.RESEND_FROM ||
-        "Tienda de software <no-reply@tu-dominio.com>",
+        "ShopLink <no-reply@tu-dominio.com>",
       // TO: sigue siendo el correo donde querés recibir los mensajes del sitio
       to: process.env.EMAIL_USER as string,
       subject,
