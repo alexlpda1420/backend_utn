@@ -12,8 +12,8 @@ estructura, tecnologías, endpoints, configuración, deploy y relación con la c
 
 - **Nombre:** Alexis Esteban Roldan  
 - **Proyecto:** ShopLink – Backend (API REST en TypeScript)  
-- **Rol:** Estudiante de Desarrollo Full Stack / Responsable de Soporte Interno IT  
-- **Email de contacto:** alexis.roldan@hasar.com  
+- **Rol:** Estudiante de Desarrollo Full Stack 
+- **Email de contacto:** a.eroldan@hotmail.com
 - **GitHub:** [@alexlpda1420](https://github.com/alexlpda1420)  
 - **LinkedIn:** [Alexis Esteban Roldan](https://www.linkedin.com/in/alexis-esteban-roldan/)
 
